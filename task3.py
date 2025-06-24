@@ -37,4 +37,4 @@ def generate_versions(version, config_file):
 
 
 # Пример запуска:
-# generate_versions('3.7.4', 'config.json')
+generate_versions("3.7.4", "config.json")

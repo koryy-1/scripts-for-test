@@ -9,7 +9,10 @@ from glob import glob
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 
 
-def build_script(repo_url, source_path, version):
+def build_script(repo_url: str, source_path, version):
+    if os.name == "nt":
+        source_path = source_path.replace("/", "\\")
+
     repo_name = repo_url.split("/")[-1].replace(".git", "")
     git.Repo.clone_from(repo_url, repo_name)
     logging.info(f"Склонирован репозиторий {repo_name}")
@@ -19,10 +22,13 @@ def build_script(repo_url, source_path, version):
 
     for item in os.listdir(root_path):
         item_path = os.path.join(root_path, item)
-        if item_path != abs_source_path:
+        if abs_source_path.find(item_path) == -1:
             if os.path.isdir(item_path):
-                shutil.rmtree(item_path)
-                logging.info(f"Удалена директория: {item_path}")
+                try:
+                    shutil.rmtree(item_path)
+                    logging.info(f"Удалена директория: {item_path}")
+                except Exception as error:
+                    logging.info(f"Не удалось удалить директорию {item_path}: {error}")
 
     version_file = {
         "name": "hello world",
@@ -46,4 +52,4 @@ def build_script(repo_url, source_path, version):
 
 
 # Пример запуска:
-# build_script('https://github.com/paulbouwer/hello-kubernetes', 'src/app', '25.3000')
+build_script("https://github.com/paulbouwer/hello-kubernetes", "src/app", "25.3000")
