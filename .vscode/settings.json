@@ -1,0 +1,27 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "flake8.args": [
+        "--max-line-length=110",
+        "--extend-ignore=E203"
+    ],
+    "mypy-type-checker.args": [
+        "--show-column-numbers",
+        "--no-pretty",
+        "--namespace-packages",
+        // "--disallow-untyped-defs",
+        "--show-error-codes",
+        "--implicit-optional",
+        "--follow-import=silent",
+        "--disable-error-code=var-annotated",
+        "--disable-error-code=import-untyped",
+        "--disable-error-code=import-not-found",
+        "--disable-error-code=method-assign",
+        "--disable-error-code=empty-body"
+    ],
+}
