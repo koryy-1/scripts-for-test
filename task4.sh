@@ -15,8 +15,8 @@ for unit in $(systemctl list-units --type=service | grep foobar- | awk '{print $
 
     unit_file="/etc/systemd/system/$unit"
 
-    sed -i "s|WorkingDirectory=/opt/misc/$name|WorkingDirectory=$new_dir|" "$unit_file"
-    sed -i "s|ExecStart=/opt/misc/$name/foobar-daemon|ExecStart=$new_dir/foobar-daemon|" "$unit_file"
+    sed -i "s|WorkingDirectory=$old_dir|WorkingDirectory=$new_dir|" "$unit_file"
+    sed -i "s|ExecStart=$old_dir/foobar-daemon|ExecStart=$new_dir/foobar-daemon|" "$unit_file"
 
     echo "Перезапускаем $unit"
     systemctl daemon-reexec
